@@ -101,8 +101,8 @@ def similarity_search(query: str, top_k: int = 5) -> list[dict]:
             "distance": distance,
         })
 
-    # En benzer chunk'lar önce gelecek
+   
     results.sort(key=lambda x: x["distance"])
 
-    # Sadece top_k sonucu döndür
+ 
     return results[:top_k]

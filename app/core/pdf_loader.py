@@ -14,7 +14,7 @@ def load_pdf(file_path: str) -> list[Document]:
     loader = PyPDFLoader(file_path)
     documents = loader.load()
 
-    # Metadata'yı zenginleştirelim (dosya adını ekleyelim)
+  
     file_name = Path(file_path).name
     for doc in documents:
         doc.metadata["source_file"] = file_name
