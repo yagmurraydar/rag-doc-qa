@@ -1,0 +1,19 @@
+version: "3.9"
+
+services:
+  postgres:
+    image: ankane/pgvector:latest
+    container_name: rag_postgres
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: ragdb
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+      - ../scripts/init_db.sql:/docker-entrypoint-initdb.d/init_db.sql
+
+volumes:
+  pgdata:
