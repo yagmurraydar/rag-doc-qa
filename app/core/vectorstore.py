@@ -5,6 +5,7 @@ from app.core.embeddings import embed_texts
 from langchain_core.documents import Document
 from pgvector import Vector
 
+
 def get_connection():
     conn = psycopg2.connect(
         host="localhost",
@@ -31,13 +32,15 @@ def save_chunks(chunks: list[Document]):
     rows = []
 
     for chunk, embedding in zip(chunks, embeddings):
-        rows.append((
-            chunk.page_content,
-            Vector(embedding),
-            chunk.metadata.get("source_file"),
-            chunk.metadata.get("page"),
-            chunk.metadata.get("chunk_id"),
-        ))
+        rows.append(
+            (
+                chunk.page_content,
+                Vector(embedding),
+                chunk.metadata.get("source_file"),
+                chunk.metadata.get("page"),
+                chunk.metadata.get("chunk_id"),
+            )
+        )
 
     execute_values(
         cur,
@@ -56,7 +59,6 @@ def save_chunks(chunks: list[Document]):
     conn.close()
 
     print(f"{len(rows)} chunk pgvector'a yazıldı.")
-
 
 
 def similarity_search(query: str, top_k: int = 5) -> list[dict]:
@@ -82,7 +84,7 @@ def similarity_search(query: str, top_k: int = 5) -> list[dict]:
             embedding <=> %s AS distance
         FROM document_chunks
         """,
-        (query_embedding,)
+        (query_embedding,),
     )
 
     rows = cur.fetchall()
@@ -93,16 +95,18 @@ def similarity_search(query: str, top_k: int = 5) -> list[dict]:
     results = []
 
     for content, source_file, page, chunk_id, distance in rows:
-        results.append({
-            "content": content,
-            "source_file": source_file,
-            "page": page,
-            "chunk_id": chunk_id,
-            "distance": distance,
-        })
+        results.append(
+            {
+                "content": content,
+                "source_file": source_file,
+                "page": page,
+                "chunk_id": chunk_id,
+                "distance": distance,
+            }
+        )
 
-   
     results.sort(key=lambda x: x["distance"])
 
- 
+   
+
     return results[:top_k]

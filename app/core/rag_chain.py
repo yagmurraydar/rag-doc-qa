@@ -59,6 +59,8 @@ def answer_question(question: str, top_k: int = 5) -> dict:
         question=question
     )
 
+    
+
     # 4. Groq üzerinden LLM çağrısı
     response = client.chat_completion(
         messages=[
@@ -71,7 +73,7 @@ def answer_question(question: str, top_k: int = 5) -> dict:
         max_tokens=300,
         temperature=0.3,
     )
-
+    
     # 5. Cevabı al
     answer = response.choices[0].message.content
 
