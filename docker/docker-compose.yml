@@ -14,6 +14,30 @@ services:
     volumes:
       - pgdata:/var/lib/postgresql/data
       - ../scripts/init_db.sql:/docker-entrypoint-initdb.d/init_db.sql
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  app:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile
+    container_name: rag_app
+    restart: always
+    environment:
+      DB_HOST: postgres
+      DB_PORT: 5432
+      DB_NAME: ragdb
+      DB_USER: postgres
+      DB_PASSWORD: postgres
+      HF_API_TOKEN: ${HF_API_TOKEN}
+    ports:
+      - "8000:8000"
+    depends_on:
+      postgres:
+        condition: service_healthy
 
 volumes:
   pgdata:

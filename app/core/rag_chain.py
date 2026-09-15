@@ -1,12 +1,16 @@
 import os
 from dotenv import load_dotenv
 from huggingface_hub import InferenceClient
+
 from app.core.vectorstore import similarity_search
 
 load_dotenv()
 
+HF_TOKEN = os.getenv("HF_API_TOKEN")
+
 client = InferenceClient(
-    token=os.getenv("HF_API_TOKEN")
+    token=HF_TOKEN,
+    provider="groq"
 )
 
 PROMPT_TEMPLATE = """Aşağıdaki bağlamı kullanarak soruyu yanıtla.
@@ -59,9 +63,7 @@ def answer_question(question: str, top_k: int = 5) -> dict:
         question=question
     )
 
-    
-
-    # 4. Groq üzerinden LLM çağrısı
+    # 4. Hugging Face üzerinden Groq provider ile LLM çağrısı
     response = client.chat_completion(
         messages=[
             {
@@ -69,11 +71,11 @@ def answer_question(question: str, top_k: int = 5) -> dict:
                 "content": prompt
             }
         ],
-        model="openai/gpt-oss-20b:groq",
+        model="openai/gpt-oss-20b",
         max_tokens=300,
         temperature=0.3,
     )
-    
+
     # 5. Cevabı al
     answer = response.choices[0].message.content
 

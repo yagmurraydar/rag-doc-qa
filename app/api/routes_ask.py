@@ -19,7 +19,16 @@ async def ask_question(request: AskRequest):
             for s in result["sources"]
         ]
 
-        return AskResponse(answer=result["answer"], sources=sources)
+        return AskResponse(
+            answer=result["answer"],
+            sources=sources
+        )
 
     except Exception as e:
-        raise HTTPException(status_code=500, detail=f"Cevap üretilirken hata oluştu: {str(e)}")
+        import traceback
+        traceback.print_exc()
+
+        raise HTTPException(
+            status_code=500,
+            detail=f"Cevap üretilirken hata oluştu: {str(e)}"
+        )
