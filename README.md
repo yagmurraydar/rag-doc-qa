@@ -656,7 +656,7 @@ Swagger üzerinden:
 
 işlemleri test edildi.
 
-![Swagger UI](images/swagger-ui.png)
+
 
 ---
 
@@ -666,7 +666,7 @@ Swagger UI üzerinden `/api/ask` endpoint'i kullanılarak kullanıcı sorusu gö
 
 Cevap ile birlikte ilgili PDF ve sayfa bilgileri de döndürülür.
 
-![RAG Ask Response](images/ask.png)
+
 
 ---
 
