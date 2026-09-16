@@ -125,68 +125,6 @@ Uygulama **FastAPI**, **PostgreSQL + pgvector**, **Hugging Face**, **LangChain**
 
 ---
 
-# Proje Yapısı
-
-```text
-rag-doc-qa/
-│
-├── app/
-│   ├── main.py
-│   ├── config.py
-│   │
-│   ├── api/
-│   │   ├── routes_upload.py
-│   │   └── routes_ask.py
-│   │
-│   ├── core/
-│   │   ├── pdf_loader.py
-│   │   ├── chunking.py
-│   │   ├── embeddings.py
-│   │   ├── vectorstore.py
-│   │   └── rag_chain.py
-│   │
-│   └── models/
-│       └── schemas.py
-│
-├── docker/
-│   ├── Dockerfile
-│   └── docker-compose.yml
-│
-├── images/
-│   ├── mimari.jpg
-│   ├── ask.png
-│   └── swagger-ui.png
-│
-├── scripts/
-│   ├── init_db.sql
-│   ├── test_pipeline.py
-│   └── test_rag.py
-│
-├── .env.example
-├── .gitignore
-├── requirements.txt
-└── README.md
-```
-
----
-
-# Çalışma Mantığı
-
-## 1. PDF Yükleme
-
-Kullanıcı sisteme bir PDF yükler.
-
-FastAPI dosyayı alır ve PDF loader aracılığıyla metin ve sayfa bilgilerini çıkarır.
-
-```text
-PDF
- ↓
-PDF Loader
- ↓
-Page Content
-```
-
----
 
 ## 2. Chunking
 
@@ -429,7 +367,7 @@ DB_USER=postgres
 DB_PASSWORD=postgres
 ```
 
-> `.env` dosyası gizli bilgiler içerdiği için GitHub'a gönderilmemelidir.
+
 
 ---
 
@@ -605,7 +543,7 @@ cd rag-doc-qa
 
 EC2 üzerinde `.env` dosyası oluşturuldu ve Hugging Face token gibi gizli bilgiler burada tutuldu.
 
-Bu bilgiler GitHub repository'sine gönderilmedi.
+
 
 ---
 
